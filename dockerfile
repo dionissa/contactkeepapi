@@ -1,29 +1,16 @@
-# Use uma imagem base com suporte ao Maven
-FROM maven:3.8.4-openjdk-11 AS build
+FROM ubuntu:latest AS build
 
-# Define o diretório de trabalho dentro do contêiner
-WORKDIR /app
+RUN apt-get update
+RUN apt-get install openjdk-17-jdk -y
+COPY . .
 
-# Copia os arquivos de configuração do Maven para o contêiner
-COPY pom.xml .
+RUN apt-get install maven -y
+RUN mvn clean install 
 
-# Baixa as dependências do Maven para que elas sejam armazenadas em cache
-RUN mvn dependency:go-offline -B
+FROM openjdk:17-jdk-slim
 
-# Copia o restante dos arquivos do projeto para o contêiner
-COPY src ./src
+EXPOSE 8080
 
-# Compila o projeto e gera o arquivo JAR
-RUN mvn package -DskipTests
+COPY --from=build /target/deploy_render-1.0.0.jar app.jar
 
-# Use uma imagem base com suporte ao Java para executar o aplicativo
-FROM adoptopenjdk/openjdk11:alpine-slim
-
-# Define o diretório de trabalho dentro do contêiner
-WORKDIR /app
-
-# Copia o arquivo JAR gerado a partir do estágio de construção anterior para este contêiner
-COPY --from=build /app/target/your-app.jar .
-
-# Comando para executar o aplicativo quando o contêiner iniciar
-CMD ["java", "-jar", "your-app.jar"]
+ENTRYPOINT [ "java", "-jar", "app.jar" ]
