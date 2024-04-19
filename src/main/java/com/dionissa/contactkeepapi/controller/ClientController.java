@@ -45,6 +45,13 @@ public class ClientController {
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}") // Endpoint para buscar cliente pelo ID
+    public ResponseEntity<Client> getClientById(@PathVariable Long id) {
+        Optional<Client> client = clientService.findClientById(id);
+        return client.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @GetMapping("/search")
     public ResponseEntity<List<Client>> getClientsByName(@RequestParam String name) {
         List<Client> clients = clientService.findClientsByName(name);
