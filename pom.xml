@@ -8,7 +8,7 @@
 		<version>3.1.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.danieleleaoe</groupId>
+	<groupId>br.com.dionissa</groupId>
 	<artifactId>deploy_render</artifactId>
 	<version>1.0.0</version>
 	<name>deploy_render</name>
@@ -34,9 +34,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.3.6</version>
 		</dependency>
 
 		<dependency>
