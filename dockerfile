@@ -1,7 +1,7 @@
 FROM ubuntu:latest AS build
 
 RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
+RUN apt-get install openjdk-17-jdk curl -y  # Install curl and openjdk
 
 # Download the PostgreSQL JDBC driver
 RUN curl -L https://jdbc.postgresql.org/download/postgresql-42.3.6.jar -o /usr/share/java/postgresql-jdbc.jar
