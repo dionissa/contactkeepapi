@@ -29,7 +29,7 @@ public class ClientService {
         clientRepository.delete(client);
     }
 
-    public Client editClient(Client client) {
+    public Client updateClient(Client client) {
         return clientRepository.save(client);
     }
 
